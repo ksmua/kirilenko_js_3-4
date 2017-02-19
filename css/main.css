@@ -1,0 +1,11 @@
+.wrapper{
+	width: 800px;
+	font-family: arial;
+	margin: 0 auto;
+}
+.test-header {
+	text-align: center;
+}
+.test-body{
+	margin-left: 98px;
+}
