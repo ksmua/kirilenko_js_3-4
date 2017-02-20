@@ -21,10 +21,12 @@ var testList = {
 	}
 } 
 var doc = document.body;
+	doc.className = 'test-body';
 var insertFragment = document.createDocumentFragment();
 // document.createDocumentFragment();
 
 function createTestFragment(list){
+	var olElem = document.createElement('ol'); //create ordered list
 	for (var key in list){
 		//if qurent is answers
 		if ( typeof(list[key]) === "object") {
@@ -32,8 +34,9 @@ function createTestFragment(list){
 	
 			for (subKey in subList){
 				var liElem = document.createElement('li'); //create tag li
+					liElem.className = 'ul-li-elem';
 					var labelElem = document.createElement('label'); //create tag label
-					labelElem.innerHTML = subList[subKey]; //set ansver text in teg label
+						labelElem.innerHTML = subList[subKey]; //set ansver text in teg label
 						var inputElem = document.createElement('input'); //create input field
 							inputElem.type = 'checkbox'; //input = checkbox (or can be radio)
 							inputElem.id = 'checkbox1';
@@ -43,12 +46,16 @@ function createTestFragment(list){
 			}
 		} else { 
 			//if qurent is question
+		var olLiElem = document.createElement('li'); //create ordered list element
 			var ulElem = document.createElement('ul');
-				ulElem.style = 'list-style: none';
+				ulElem.className = 'ul-elem';
 				ulElem.innerHTML = list[key]; //add qestion text in ul title
 		}
-	insertFragment.appendChild(ulElem); //add ul(with question) in fragment
+	olLiElem.appendChild(ulElem); //add question list to ordered list element
+	olLiElem.className = 'ol-elem';
+	olElem.appendChild(olLiElem); //add ordered list element to ordered list
 	}
+	insertFragment.appendChild(olElem); //add ol in fragment
 //after that the final fragment will be added to body
 }
 
@@ -66,17 +73,20 @@ addStyleSheetLink(cssSrc); //add stylesheet link in html head
 
 
 var wrapElem = document.createElement('div');
-	wrapElem.style = 'class="wrapper"';
+	wrapElem.className = 'wrapper';
 	//class = 'wrapper';
 	var headElem = document.createElement('p');
-		headElem.class = 'test-header';
+		headElem.className = 'test-header';
 		headElem.innerHTML = testTitle; //set title 'Тест по програмированию'
 	wrapElem.appendChild(headElem); //add p in wraper
 
 	//add testBody
-insertFragment.appendChild(wrapElem); //add wraper in body
-createTestFragment(testList);
-doc.appendChild(insertFragment);
+	createTestFragment(testList);
+	wrapElem.appendChild(insertFragment);
+//  insertFragment.appendChild(wrapElem); //add wraper in body
+	doc.appendChild(wrapElem);
+	// doc.style = 'margin-left: 98px';
+// doc.appendChild(insertFragment);
 
 
 // function addNode(testQuestion){
